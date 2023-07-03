@@ -63,8 +63,8 @@ light = new THREE.DirectionalLight("rgb(255,255,255)", 2.5);
 light.position.copy(position);
 light.castShadow = true;
 // alterando os parâmetros da luz
-light.shadow.mapSize.width = 1024; // alterar para 1024 caso esteja pesando
-light.shadow.mapSize.height = 1024; // // alterar para 1024 caso esteja pesando
+light.shadow.mapSize.width = 2048; // alterar para 1024 caso esteja pesando
+light.shadow.mapSize.height = 2048; // // alterar para 1024 caso esteja pesando
 light.shadow.camera.near = -10.1;
 light.shadow.camera.far = 500;
 light.shadow.camera.left = -55;
@@ -288,8 +288,6 @@ function addJoysticks() {
     joystick.on('move', function (evt, data) {
       steerX = data.vector.x;
       steerY = data.vector.y;
-      console.log("steerX: " + steerX);
-      console.log("steerY: " + steerY);
       AvMove(steerX, steerY);
     });
 
@@ -553,7 +551,6 @@ function checkCollision2(t, p) {
     if (!tirosColididos.includes(p)) {
       collision = aviaoBB.intersectsBox(t);
       if (collision) {
-        console.log('colidiu');
         tirosColididos.push(p);
         gb -= 50;
         aviao.traverse(function(child) {
@@ -659,7 +656,6 @@ function render() {
         turretShotsBB[i].copy(b.geometry.boundingBox).applyMatrix4(b.matrixWorld);
         turretShotsBB[i].setFromObject(b);
         let distancia = b.position.distanceTo(b.userData.initialPosition);
-        //console.log(b.id);
         let collision = checkCollision2(turretShotsBB[i],id);
         if (b.position.y < 0 || distancia > 400 || b.position.x < -35 || b.position.x > 35 || b.position.y > 40 || collision ){
           scene.remove(b);
