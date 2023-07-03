@@ -49,13 +49,20 @@ document.addEventListener('keydown', function(event) {
   event.preventDefault();
 });
 
+document.addEventListener('touchmove', function(event) {
+  if (event.scale !== 1) {
+    event.preventDefault();
+  }
+}, { passive: false });
+
+
 // adicionando luz direcional
 light = new THREE.DirectionalLight("rgb(255,255,255)", 2.5);
 light.position.copy(position);
 light.castShadow = true;
 // alterando os parâmetros da luz
-light.shadow.mapSize.width = 2048; // alterar para 1024 caso esteja pesando
-light.shadow.mapSize.height = 2048; // // alterar para 1024 caso esteja pesando
+light.shadow.mapSize.width = 1024; // alterar para 1024 caso esteja pesando
+light.shadow.mapSize.height = 1024; // // alterar para 1024 caso esteja pesando
 light.shadow.camera.near = -10.1;
 light.shadow.camera.far = 500;
 light.shadow.camera.left = -55;
