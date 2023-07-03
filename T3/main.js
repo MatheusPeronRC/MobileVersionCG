@@ -54,7 +54,9 @@ document.addEventListener('touchmove', function(event) {
     event.preventDefault();
   }
 }, { passive: false });
-
+document.ontouchmove = function(event){
+  event.preventDefault();
+}
 
 // adicionando luz direcional
 light = new THREE.DirectionalLight("rgb(255,255,255)", 2.5);
