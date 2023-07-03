@@ -45,7 +45,10 @@ let loader = new GLTFLoader();
 // const axisHelper = new THREE.AxesHelper(200);
 // scene.add(axisHelper);
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
-window.addEventListener('orientationchange', onOrientationChange);
+document.addEventListener('keydown', function(event) {
+  event.preventDefault();
+});
+
 // adicionando luz direcional
 light = new THREE.DirectionalLight("rgb(255,255,255)", 2.5);
 light.position.copy(position);
