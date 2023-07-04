@@ -27,6 +27,14 @@ audioLoader.load( './Assets/imperial.mp3', function( buffer ) {
   sound.play();
 
 });
+window.addEventListener('deviceorientation', handleOrientation);
+function handleOrientation(event) {
+  const beta = event.beta;
+  const gamma = event.gamma; 
+  
+  // Atualize as coordenadas do joystick com base nos valores de beta e gamma
+  // Certifique-se de normalizar os valores para o intervalo desejado (-1 a 1, por exemplo)
+}
 
 // luz ambiente
 var ambientLight = new THREE.AmbientLight("rgb(60,60,60)");
@@ -48,15 +56,8 @@ window.addEventListener('resize', function () { onWindowResize(camera, renderer)
 document.addEventListener('keydown', function(event) {
   event.preventDefault();
 });
+window.addEventListener( 'orientationchange', onOrientationChange );
 
-document.addEventListener('touchmove', function(event) {
-  if (event.scale !== 1) {
-    event.preventDefault();
-  }
-}, { passive: false });
-document.ontouchmove = function(event){
-  event.preventDefault();
-}
 
 // adicionando luz direcional
 light = new THREE.DirectionalLight("rgb(255,255,255)", 2.5);
@@ -196,7 +197,7 @@ function adicionaTorretaPlano() {
     if(i < 3 && torretas[i] !== null)
     {
       terreno.planos[i].plano.add(torretas[i]);
-      torretas[i].position.set(x, 35, z);
+      torretas[i].position.set(x, 35, 0);
     }
   }
 }
@@ -206,7 +207,7 @@ function torretaUpdate(i) {
   x = Math.floor(Math.random() * (70 - 9)) - (70 / 2 - 5);
   z = Math.floor(Math.random() * (70) - (70 / 2));
   if (i < 3 && torretas[i] != null) {
-    torretas[i].position.set(x, 35, z);
+    torretas[i].position.set(x, 35, 0);
     torretas[i].traverse(function (child) {
       if(child){
         child.castShadow = true;
@@ -243,13 +244,13 @@ scene.add(raycasterGroup);
 //document.addEventListener('touchmove', onTouchMove, false); // executa a função onMouseMove quando o mouse se move na tela
 document.addEventListener('touchend', onTouchEnd, false);
 
-function onTouchMove(event) {
-  // calcula e armazena a posição normalizada de coordenadas do dispositivo para o x e o y do mouse
+// function onTouchMove(event) {
+//   // calcula e armazena a posição normalizada de coordenadas do dispositivo para o x e o y do mouse
   
-  var touch = event.touches[0];
-  mouse.x = (touch.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(touch.clientY / window.innerHeight) * 2 + 1;
-}
+//   var touch = event.touches[0];
+//   mouse.x = (touch.clientX / window.innerWidth) * 2 - 1;
+//   mouse.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+// }
 let on = true;
 function onTouchEnd(event) {
   switch (event.target.id) {
@@ -278,6 +279,7 @@ function onTouchEnd(event) {
       break;
   }
 }
+
 let steerX = 0 , steerY = 0;
 function addJoysticks() {
     let joystick = nipplejs.create({
@@ -292,9 +294,8 @@ function addJoysticks() {
       AvMove(steerX, steerY);
     });
 
-    joystick.on('end', function (evt) {
-      // Lógica a ser executada quando o joystick é solto (opcional)
-    });
+    //joystick.on('end', function (evt) {
+   // });
 
 }
 
@@ -392,7 +393,7 @@ function continuarGame() {
 }
 
 function AvMove(steerX, steerY) {
-  raycaster.setFromCamera(mouse, camera); // inicializa ponto de origem do raycaster
+  raycaster.setFromCamera(new THREE.Vector2(steerX, steerY), camera); // inicializa ponto de origem do raycaster
   raycaster.layers.set(1);  //detectar  objetos na camada 1
   var intersection = raycaster.intersectObjects(raycasterGroup.children, true); // armazena os objetos atualmente com interseccão ao raycaster
   if (intersection.length > 0) { // se existe um objeto com itercecção ao raycaster, armazene o ponto de intercecção e faça o avião dar lerp a ele e rotacionar em direção a ele (tudo somente no plano XY)
@@ -402,13 +403,13 @@ function AvMove(steerX, steerY) {
     const adjustedSteerX = steerX * maxSteerX;
     const adjustedSteerY = steerY * maxSteerY;
 
-    const increment2 = 0.02;
+    const increment2 = 0.2;
     const targetMiraX = mira.position.x + (adjustedSteerX - mira.position.x) * increment2;
     const targetMiraY = mira.position.y + (adjustedSteerY - mira.position.y) * increment2;
-    mira.position.x = targetMiraX;
-    mira.position.y = targetMiraY;
+    mira.position.x = THREE.MathUtils.lerp(mira.position.x, targetMiraX, increment2);
+    mira.position.y = THREE.MathUtils.lerp(mira.position.y, targetMiraY, increment2);
 
-    const increment = 0.1;
+    const increment = 0.08;
     const targetX = aviao.position.x + (mira.position.x - aviao.position.x) * increment;
     const targetY = aviao.position.y + (mira.position.y - aviao.position.y) * increment;
 
