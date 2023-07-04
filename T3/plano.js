@@ -73,12 +73,8 @@ export class Plano {
         bbox.setFromObject(cubo1);
         //const boxHelper = new THREE.BoxHelper(cubo1, 0xffff00);
         // this.plano.add(boxHelper);
-
         this.plano.add(cubo1);
         this.cubos.push(cubo1);
-
-
-
       }
       else {
         cubo1.position.set((70 / 2) + 8.75, 43.75, ((70 / 2) - 8.75) + aux2);
@@ -163,9 +159,10 @@ export class Plano {
 
         var cubeGeometry = new THREE.BoxGeometry(80, 0.5, 5);
         var material = new THREE.MeshPhongMaterial({});
-        material.receiveShadow = true;
         var cube = new THREE.Mesh(cubeGeometry, material);
         cube.material.map = textura3;
+        cube.receiveShadow = true;
+        cube.castShadow = true;
         var repeatFactor = 2;
         var wrapModeS = THREE.RepeatWrapping;
         var wrapModeT = THREE.RepeatWrapping;
@@ -269,6 +266,8 @@ export class Plano {
         var material2 = new THREE.MeshPhongMaterial({});
         material2.receiveShadow = true;
         var cube3 = new THREE.Mesh(cubeGeometry1, material2);
+        cube3.receiveShadow = true;
+        cube3.castShadow = true;
         this.cubos[1].add(cube3);
         cube3.position.set(10, 0, 0.0)
 
@@ -296,9 +295,11 @@ export class Plano {
         var cubeGeometry4 = new THREE.BoxGeometry(0.5, 15, 10);
         var material4 = new THREE.MeshPhongMaterial({ color: '' });
         material2.receiveShadow = true;
-        var cube3 = new THREE.Mesh(cubeGeometry4, material4);
-        //this.cubos[1].add(cube3);
-        cube3.position.set(10, 0, 0.0)
+        var cube4 = new THREE.Mesh(cubeGeometry4, material4);
+        this.cubos[1].add(cube4);
+        cube4.receiveShadow = true;
+        cube4.castShadow = true;
+        cube4.position.set(10, 0, 0.0)
 
 
         const quintocubo = this.cubos[4]; //cubo com pontes 
@@ -310,38 +311,42 @@ export class Plano {
 
         var cubeGeometry2 = new THREE.BoxGeometry(2, 2, 2);
         var material3 = new THREE.MeshPhongMaterial({ color: 'gray' });
-        material3.receiveShadow = true;
-        var cube4 = new THREE.Mesh(cubeGeometry2, material3);
-        cube4.position.set(-10, -2, 38)
-        this.cubos[4].add(cube4);
         var cube5 = new THREE.Mesh(cubeGeometry2, material3);
-        cube5.position.set(-10, -2, 12)
+        cube5.castShadow = true;
+        cube5.receiveShadow = true;
+        cube5.position.set(-10, -2, 38)
         this.cubos[4].add(cube5);
-
+        var cube6 = new THREE.Mesh(cubeGeometry2, material3);
+        cube6.position.set(-10, -2, 12)
+        this.cubos[4].add(cube6);
+        cube6.receiveShadow = true;
+        cube6.castShadow = true;
         tubo3.material.map = textura2;
-        cube4.material.map = textura2;
         cube5.material.map = textura2;
+        cube6.material.map = textura2;
 
         var cubeGeometry2 = new THREE.BoxGeometry(3, 2, 2);
-        var material4 = new THREE.MeshPhongMaterial({ color: '' });
+        var material4 = new THREE.MeshPhongMaterial({ color: 'white' });
         material4.receiveShadow = true;
 
-        var cube6 = new THREE.Mesh(cubeGeometry2, material4);
+        var cube7 = new THREE.Mesh(cubeGeometry2, material4);
         var randomX1 = Math.random() * -65; 
-        cube6.position.set(randomX1, -7.5, 10);
-        this.cubos[4].add(cube6);
-        cube6.material.map = textura1;
-
+        cube7.position.set(randomX1, -7.5, 10);
+        this.cubos[4].add(cube7);
+        cube7.material.map = textura1;
+        cube7.receiveShadow = true;
+        cube7.castShadow = true;
         var cubeGeometry5 = new THREE.BoxGeometry(3, 2, 2);
         var material5 = new THREE.MeshPhongMaterial({ color: '' });
         material5.receiveShadow = true;
 
-        var cube7 = new THREE.Mesh(cubeGeometry5, material5);
+        var cube8 = new THREE.Mesh(cubeGeometry5, material5);
         var randomX2 = Math.random() * -65;
-        cube7.position.set(randomX2, -7.5, 20);
-        this.cubos[4].add(cube7);
-        cube7.material.map = textura1;
-
+        cube8.position.set(randomX2, -7.5, 20);
+        this.cubos[4].add(cube8);
+        cube8.material.map = textura1;
+        cube8.receiveShadow = true;
+        cube8.castShadow = true;
         var tubo7 = createCylinder(1, 2, 2);
         // tubo3.rotateX(THREE.MathUtils.degToRad(90));
         var randomX3 = Math.random() * -65; 
@@ -353,11 +358,12 @@ export class Plano {
         var geometry = new THREE.CylinderGeometry(radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded);
         var material;
         if (!color)
-          material = new THREE.MeshPhongMaterial({ color: "" });
+          material = new THREE.MeshPhongMaterial({ color: '' });
         else
-          material = new THREE.MeshPhongMaterial({ color: "" });
+          material = new THREE.MeshPhongMaterial({ color: '' });
         var object = new THREE.Mesh(geometry, material);
         object.castShadow = true;
+        object.receiveShadow = true;
         return object;
 
       }

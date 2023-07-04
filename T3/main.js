@@ -129,8 +129,7 @@ function loadObject() {
       obj.rotateY(THREE.MathUtils.degToRad(270));
       obj.traverse(function (child) {
         if (child) {
-          child.castShadow = true;
-          child.receiveShadow = true;
+          
         }
         if (child.isMesh) {
           // Criação de cópias independentes da geometria e do material
@@ -158,6 +157,8 @@ function loadObject() {
               const clonedGeometry = child.geometry.clone(); // Clone a geometria da mesh
               const clonedMaterial = child.material.clone(); // Clone o material da mesh
               const mesh = new THREE.Mesh(clonedGeometry, clonedMaterial); // Crie um novo Mesh com a geometria e o material clonados
+              mesh.castShadow = true;
+              mesh.receiveShadow = true;
               clonedObject.add(mesh); // Adicione o novo Mesh ao objeto clonado
               child.visible = false;
             }
