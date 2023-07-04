@@ -20,7 +20,7 @@ camera = initCamera(new THREE.Vector3(0, 25, 75)); // Init camera in this positi
 var listener = new THREE.AudioListener();
 const sound = new THREE.Audio( listener ); 
 var audioLoader = new THREE.AudioLoader();
-audioLoader.load( './Assets/imperial.mp3', function( buffer ) {
+audioLoader.load( './Sound/imperial.mp3', function( buffer ) {
 	sound.setBuffer( buffer );
 	sound.setLoop( true ); //continar tocando mesmo quando acabar
 	sound.setVolume( 1.1 );
@@ -92,7 +92,7 @@ let auxGeo = new THREE.CylinderGeometry(0.001, 0.001, 0.01, 1);
 let auxMat = new THREE.MeshLambertMaterial({ color: 'rgb(180,180,255)', visible: false, });
 let aviao = new THREE.Mesh(auxGeo, auxMat);
 aviao.position.set(0, 10, 10);
-loader.load('./Assets/F-16D.gltf',
+loader.load('./Assets/xwing.glb',
   function (gltf) {
     let obj;
     obj = gltf.scene;
@@ -107,7 +107,7 @@ loader.load('./Assets/F-16D.gltf',
         child.material.transparent = true;
       }
     });
-    obj.scale.set(0.7,0.7 ,0.7);
+    obj.scale.set(1.5,1.5 ,1.5);
     aviao.add(obj);
     scene.add(aviao);
    // aviao.translateZ(-100);
@@ -300,7 +300,7 @@ function addJoysticks() {
 }
 
 function onTouchStart(){
-  const audio = new Audio('./Assets/shotaviao.mp3');
+  const audio = new Audio('./Sound/shotaviao.mp3');
   audio.play();
   let tiro = new THREE.Mesh(new THREE.SphereGeometry(0.5, 8, 4), new THREE.MeshPhongMaterial({
     color: "yellow"
@@ -356,12 +356,12 @@ let id = 0;
 
 function TurretShot(){ // tiro da torreta
   
-  const audio = new Audio('./Assets/hitaviao2.mp3');
+  const audio = new Audio('./Sound/hitaviao2.mp3');
   audio.volume = 0.1;
   audio.play();
 
   let tiro = new THREE.Mesh(new THREE.SphereGeometry(0.5, 8, 4), new THREE.MeshPhongMaterial({
-     color: 0xff0000, 
+     color: 'white', 
      shininess: 100 }));
   tiro.castShadow = true;
   tiro.receiveShadow = true;
@@ -467,7 +467,7 @@ let collisionSound;
 // Function to load the collision sound
 function loadCollisionSound() {
   const audioLoader = new THREE.AudioLoader();
-  audioLoader.load('./Assets/explosiontrt.mp3', function(buffer) {
+  audioLoader.load('./Sound/explosiontrt.mp3', function(buffer) {
     collisionSound = buffer;
   });
 }
@@ -541,7 +541,7 @@ const audioLoader1 = new THREE.AudioLoader();
 let collisionSound2;
 
 // Load the collision sound file
-audioLoader1.load('./Assets/hitaviao2.mp3', function(buffer) {
+audioLoader1.load('./Sound/hitaviao2.mp3', function(buffer) {
   // Create an Audio object and set the buffer
   collisionSound2 = new THREE.Audio(listener1).setBuffer(buffer);
 });

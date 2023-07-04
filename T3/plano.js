@@ -33,11 +33,11 @@ export class Plano {
     this.posicaoZ = -(this.index * 70);
 
     var textureLoader1 = new THREE.TextureLoader();
-    var textura1 = textureLoader1.load('./Assets/txt5.jpg');
+    var textura1 = textureLoader1.load('./Texture/txt5.jpg');
     this.plano.material.map = textura1;
 
     var textureLoader3 = new THREE.TextureLoader();
-    var textura3 = textureLoader3.load('./Assets/txtponte.jpg');
+    var textura3 = textureLoader3.load('./Texture/txtponte.jpg');
     this.plano.material.map = textura3;
 
     let lineMaterial1 = new THREE.LineBasicMaterial({ color: 0xffffff });
@@ -103,10 +103,10 @@ export class Plano {
 
 
         var textureLoader = new THREE.TextureLoader();
-        var textura = textureLoader.load('./Assets/tech2.jpg');
+        var textura = textureLoader.load('./Texture/tech2.jpg');
 
         var textureLoader2 = new THREE.TextureLoader();
-        var textura2 = textureLoader2.load('./Assets/cobre.jpg');
+        var textura2 = textureLoader2.load('./Texture/cobre.jpg');
         body.material.map = textura;
 
         body2.material.map = textura;
@@ -188,6 +188,8 @@ export class Plano {
         this.cubos[1].add(cube);
         cube.position.set(35.0, 8, 20.0)
         var cube1 = new THREE.Mesh(cubeGeometry, material);
+        cube1.castShadow = true;
+        cube1.receiveShadow = true;
         this.cubos[1].add(cube1);
         cube1.position.set(35.0, 5, 20.0)
 
@@ -338,8 +340,7 @@ export class Plano {
         cube7.castShadow = true;
         var cubeGeometry5 = new THREE.BoxGeometry(3, 2, 2);
         var material5 = new THREE.MeshPhongMaterial({ color: '' });
-        material5.receiveShadow = true;
-
+        
         var cube8 = new THREE.Mesh(cubeGeometry5, material5);
         var randomX2 = Math.random() * -65;
         cube8.position.set(randomX2, -7.5, 20);
