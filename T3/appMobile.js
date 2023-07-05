@@ -242,7 +242,7 @@ scene.add(raycasterGroup);
 
 
 //document.addEventListener('touchmove', onTouchMove, false); // executa a função onMouseMove quando o mouse se move na tela
-document.addEventListener('touchend', onTouchEnd, false);
+
 
 // function onTouchMove(event) {
 //   // calcula e armazena a posição normalizada de coordenadas do dispositivo para o x e o y do mouse
@@ -251,6 +251,7 @@ document.addEventListener('touchend', onTouchEnd, false);
 //   mouse.x = (touch.clientX / window.innerWidth) * 2 - 1;
 //   mouse.y = -(touch.clientY / window.innerHeight) * 2 + 1;
 // }
+document.addEventListener('touchend', onTouchEnd, false);
 let on = true;
 function onTouchEnd(event) {
   switch (event.target.id) {
@@ -296,7 +297,6 @@ function addJoysticks() {
 
     //joystick.on('end', function (evt) {
    // });
-
 }
 
 function onTouchStart(){
